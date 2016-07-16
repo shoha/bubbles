@@ -1,7 +1,7 @@
 var Speaker = require('speaker');
 var net = require('net');
 
-var HOST = '127.0.0.1';
+var HOST = 'bubble-server.local';
 var PORT = 52280;
 var RATE = 44100;
 var CHANNELS = 2;
