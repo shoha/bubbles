@@ -1,14 +1,14 @@
 var Mic = require('mic');
 var Speaker = require('speaker');
 
-var rate = 44100;
-var channels = 2;
-var bitDepth = 24
+var RATE = 44100;
+var CHANNELS = 2;
+var BIT_DEPTH = 16;
 
 
 var micConfig = { 
-  'rate': rate, 
-  'channels': channels, 
+  'rate': RATE, 
+  'channels': CHANNELS, 
   'debug': true, 
   'device': 'hw:0,0'
 } 
@@ -17,9 +17,9 @@ var mic = Mic(micConfig);
 
 // Create the Speaker instance
 var speaker = new Speaker({
-  channels: channels,          // 2 channels
-  bitDepth: 16,         // 16-bit samples
-  sampleRate: rate     // 44,100 Hz sample rate
+  channels: CHANNELS,          // 2 channels
+  bitDepth: BIT_DEPTH,         // 16-bit samples
+  sampleRate: RATE     // 44,100 Hz sample rate
 });
 
 
