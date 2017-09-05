@@ -1,5 +1,6 @@
 var Mic = require('mic');
 var Speaker = require('speaker');
+var Writable = require('stream').Writable;
 
 var RATE = 44100;
 var CHANNELS = 2;
@@ -25,7 +26,20 @@ var speaker = new Speaker({
 
 var micInputStream = mic.getAudioStream();
 
-micInputStream.pipe(speaker);
+// micInputStream.pipe(speaker);
+
+var transform = Writable()
+transform._write = function(chunk, enc, next) {
+  console.log(chunk);
+var delay = Math.random() * 0
+
+  setTimeout(function() {
+    speaker.write(chunk)
+
+  }, delay)
+  next()
+}
+micInputStream.pipe(transform);
 
 micInputStream.on('data', function(data) {
     console.log("Recieved Input Stream: " + data.length);
