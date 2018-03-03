@@ -5,7 +5,7 @@ var os = require('os');
 var MY_HOST = os.hostname()
 var PORT = 52280;
 var RATE = 44100;
-var CHANNELS = 1;
+var CHANNELS = process.env.channels || 1;
 var BIT_DEPTH = 16;
 
 var CLIENT_MAP = {

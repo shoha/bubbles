@@ -5,7 +5,7 @@ var shell = require('shelljs')
 
 var PORT = 52280;
 var RATE = 44100;
-var CHANNELS = 1;
+var CHANNELS = process.env.CHANNELS || 1;
 var BIT_DEPTH = 16;
 
 var getDevice = function() {
