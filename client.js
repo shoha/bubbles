@@ -5,7 +5,7 @@ var os = require('os');
 var MY_HOST = os.hostname()
 var PORT = 52280;
 var RATE = 44100;
-var CHANNELS = 2;
+var CHANNELS = 1;
 var BIT_DEPTH = 16;
 
 if(process.env.DEBUG) {
@@ -23,12 +23,17 @@ if(process.env.DEBUG) {
 
 
 var launchClient = function() {
-  var speaker = new Speaker({
+  var speakerConfig = {
     channels: CHANNELS,
     sampleRate: RATE,
-    bitDepth: BIT_DEPTH
-  });
+    bitDepth: BIT_DEPTH,
+  }
 
+  if(process.env.DEBUG) {
+    speakerConfig.debug = true;
+  }
+
+  var speaker = new Speaker(speakerConfig);
   var client = new net.Socket();
 
   console.log(MY_HOST, CLIENT_MAP[MY_HOST])
