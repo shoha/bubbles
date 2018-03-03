@@ -9,7 +9,9 @@
   "author": "Hannah Shore",
   "license": "ISC",
   "dependencies": {
+    "fft.js": "^4.0.3",
     "mic": "^2.1.1",
+    "shelljs": "^0.8.1",
     "speaker": "^0.3.0"
   }
 }
