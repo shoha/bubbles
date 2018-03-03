@@ -8,19 +8,12 @@ var RATE = 44100;
 var CHANNELS = 1;
 var BIT_DEPTH = 16;
 
-if(process.env.DEBUG) {
-  var CLIENT_MAP = {
-    'Hannahs-Air.home': 'Hannahs-Air.home'
-  }
-} else {
-  var CLIENT_MAP = {
-    "bubble-server-0.local": "bubble-server-1.local",
-    "bubble-server-1.local": "bubble-server-2.local",
-    "bubble-server-2.local": "bubble-server-3.local",
-    "bubble-server-3.local": "bubble-server-0.local"
-  }
+var CLIENT_MAP = {
+  "bubble-server-0": "bubble-server-1",
+  "bubble-server-1": "bubble-server-2",
+  "bubble-server-2": "bubble-server-3",
+  "bubble-server-3": "bubble-server-0"
 }
-
 
 var launchClient = function() {
   var speakerConfig = {
@@ -36,10 +29,16 @@ var launchClient = function() {
   var speaker = new Speaker(speakerConfig);
   var client = new net.Socket();
 
-  console.log(MY_HOST, CLIENT_MAP[MY_HOST])
+  if(process.env.SERVER) {
+    var host = process.env.SERVER;
+  } else {
+    var host = CLIENT_MAP[MY_HOST];
+  }
 
-  client.connect({ host: CLIENT_MAP[MY_HOST], port: PORT }, function() {
-    console.log('Connected: ' + CLIENT_MAP[MY_HOST] + ':' + PORT);
+  console.log(MY_HOST, host);
+
+  client.connect({ host: host, port: PORT }, function() {
+    console.log('Connected: ' + host + ':' + PORT);
     client.pipe(speaker);
   });
 
