@@ -5,15 +5,18 @@ var shell = require('shelljs')
 
 var PORT = 52280;
 var RATE = 44100;
-var CHANNELS = process.env.CHANNELS || 1;
+var CHANNELS = process.env.CHANNELS || 2;
 var BIT_DEPTH = 16;
 
 var getDevice = function() {
   if(process.env.MICROPHONE) {
     configureMic(process.env.MICROPHONE);
     return;
+  } else {
+    configureMic('stereo_capture');
   }
 
+  /*
   parseOutput = function(code, stdout, stderror) {
     console.log('Parsing ' + stdout);
 
@@ -48,6 +51,7 @@ var getDevice = function() {
 
     configureMic('hw:0,0');
   }
+  */
 };
 
 var configureMic = function(device) {
@@ -68,28 +72,11 @@ var configureMic = function(device) {
   var mic = Mic(micConfig);
   var micInputStream = mic.getAudioStream();
 
-  mic.start();
-  launchServer(micInputStream);
-
-  /*
-  const audioProcessor = new Transform({
-    transform(chunk, encoding, callback) {
-      console.log(chunk, encoding);
-      callback(null, chunk)
-    }
-  });
-
-  micInputStream.pipe(audioProcessor);
-  audioProcessor.pipe(speaker);
-  */
-
-}
-
-var launchServer = function(micInputStream) {
   net.createServer(function(socket) {
     remoteClient = socket.remoteAddress + ':' + socket.remotePort
 
     console.log('Connected: ' + remoteClient);
+    mic.start();
 
     micInputStream.pipe(socket);
 
@@ -97,11 +84,15 @@ var launchServer = function(micInputStream) {
       console.log('Data: ' + remoteClient + ':: ' + data);
     });
 
+    socket.on('error', function(error) {
+      console.log('error', error);
+    });
+
     socket.on('close', function(data) {
       console.log('Data: ' + remoteClient);
     });
 
   }).listen(PORT);
-};
+}
 
 getDevice();
