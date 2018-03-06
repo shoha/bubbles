@@ -5,12 +5,11 @@ var os = require('os');
 var MY_HOST = os.hostname()
 var PORT = 52280;
 var RATE = 44100;
-var CHANNELS = process.env.channels || 1;
+var CHANNELS = process.env.CHANNELS || 2;
 var BIT_DEPTH = 16;
 
 var CLIENT_MAP = {
-  // "bubble-server-0": "bubble-server-1",
-  "bubble-server-0": "192.168.0.101",
+  "bubble-server-0": "bubble-server-1",
   "bubble-server-1": "bubble-server-2",
   "bubble-server-2": "bubble-server-3",
   "bubble-server-3": "bubble-server-0"
@@ -29,6 +28,10 @@ var launchClient = function() {
 
   var speaker = new Speaker(speakerConfig);
   var client = new net.Socket();
+
+  speaker.on('error', function(error) {
+    console.log('speaker error', error);
+  });
 
   if(process.env.SERVER) {
     var host = process.env.SERVER;
