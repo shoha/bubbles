@@ -69,14 +69,14 @@ var configureMic = function(device) {
 
   console.log(micConfig);
 
+  var mic = Mic(micConfig);
+  var micInputStream = mic.getAudioStream();
+  mic.start();
+
   net.createServer(function(socket) {
     remoteClient = socket.remoteAddress + ':' + socket.remotePort
 
     console.log('Connected: ' + remoteClient);
-
-    var mic = Mic(micConfig);
-    var micInputStream = mic.getAudioStream();
-    mic.start();
 
     micInputStream.pipe(socket);
 
