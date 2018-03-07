@@ -9,10 +9,10 @@ var CHANNELS = process.env.CHANNELS || 2;
 var BIT_DEPTH = 16;
 
 var CLIENT_MAP = {
-  "bubble-server-0": "bubble-server-1",
-  "bubble-server-1": "bubble-server-2",
-  "bubble-server-2": "bubble-server-3",
-  "bubble-server-3": "bubble-server-0"
+  "bubble-server-0": "192.168.0.201",
+  "bubble-server-1": "192.168.0.202",
+  "bubble-server-2": "192.168.0.203",
+  "bubble-server-3": "192.168.0.200"
 }
 
 var launchClient = function() {
