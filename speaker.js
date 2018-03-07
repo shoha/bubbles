@@ -47,14 +47,14 @@ var launchClient = function() {
   });
 
   client.on('close', function(data) {
-    console.log('Closed');
+    console.log('Closed', data);
     client.unpipe();
     client = undefined;
     attemptToReconnect();
   });
 
-  client.on('error', function() {
-    console.log('Error');
+  client.on('error', function(error) {
+    console.log('Error', error);
   });
 };
 
